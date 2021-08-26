@@ -7,10 +7,8 @@ class MembroController {
           const sql = "INSERT INTO membro SET ?"
           connection.query(sql, membro, (erro, resultados) => {
             if(erro){
-              console.log(erro);
               reject(erro);
             } else{
-              console.log(resultados);
               resolve(resultados);
             }
           })
@@ -22,10 +20,8 @@ class MembroController {
           const sql = `SELECT * FROM membro`;
           connection.query(sql, null, (erro, resultados) => {
             if(erro){
-              console.log(erro);
               reject(erro);
             } else{
-              console.log(resultados);
               resolve(resultados);
             }
           })

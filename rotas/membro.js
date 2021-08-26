@@ -9,6 +9,12 @@ membroRouter.get('/', (req, res) => {
   .catch((reject) => res.status(400).json(reject));
 });
 
+membroRouter.get('/:id', (req, res) => {
+  MembroController.get()
+  .then((resolve) => res.json(resolve))
+  .catch((reject) => res.status(400).json(reject));
+});
+
 membroRouter.post('/', (req, res) => {
   MembroController.post(req.body)
   .then((resolve) => res.json(resolve))
