@@ -10,7 +10,7 @@ membroRouter.get('/', (req, res) => {
 });
 
 membroRouter.get('/:id', (req, res) => {
-  MembroController.get()
+  MembroController.getOne(req.params.id)
   .then((resolve) => res.json(resolve))
   .catch((reject) => res.status(400).json(reject));
 });
@@ -21,8 +21,18 @@ membroRouter.post('/', (req, res) => {
   .catch((reject) => res.status(400).json(reject));
 });
 
-membroRouter.delete('/', () => console.log('ba'));
+membroRouter.delete('/:id', (req, res) => {
+  MembroController.delete(req.params.id)
+  .then((resolve) => res.json(resolve))
+  .catch((reject) => res.status(400).json(reject));
+});
 
-membroRouter.patch('/', () => console.log('ba'));
+membroRouter.patch('/:id', (req, res) => {
+  const params = {fields: req.query, id: req.params.id};
+
+  MembroController.patch(params)
+  .then((resolve) => res.json(resolve))
+  .catch((reject) => res.status(400).json(reject));
+});
 
 export default membroRouter;
