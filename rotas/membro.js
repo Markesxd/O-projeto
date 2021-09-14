@@ -12,27 +12,27 @@ membroRouter.get('/', (req, res) => {
 membroRouter.get('/:id', (req, res) => {
   MembroController.getOne(req.params.id)
   .then((resolve) => res.json(resolve))
-  .catch((reject) => res.status(400).json(reject));
+  .catch((reject) => {res.status(400).json({mensagem: reject.message})});
 });
 
 membroRouter.post('/', (req, res) => {
   MembroController.post(req.body)
-  .then((resolve) => res.json(resolve))
-  .catch((reject) => res.status(400).json(reject));
+  .then((resolve) => res.status(201).json(resolve))
+  .catch((reject) => res.status(reject.status).json({mensagem: reject.erro.message}));
 });
 
 membroRouter.delete('/:id', (req, res) => {
   MembroController.delete(req.params.id)
-  .then((resolve) => res.json(resolve))
-  .catch((reject) => res.status(400).json(reject));
+  .then((resolve) => res.status(204).end())
+  .catch((reject) => res.status(400).json({message: reject.message}));
 });
 
 membroRouter.patch('/:id', (req, res) => {
   const params = {fields: req.query, id: req.params.id};
 
   MembroController.patch(params)
-  .then((resolve) => res.json(resolve))
-  .catch((reject) => res.status(400).json(reject));
+  .then((resolve) => res.status(204).end())
+  .catch((reject) => res.status(400).json({mensagem: reject.message}));
 });
 
 export default membroRouter;

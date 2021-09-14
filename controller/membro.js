@@ -4,11 +4,23 @@ class MembroController {
 
       post(membro){
         return new Promise((resolve, reject) => {
+          const camposObrigatorios = ['nome', 'setor', 'telefone', 'email', 'dataNascimento', 'dataIngresso', 'pontuacao'];
+          camposObrigatorios.forEach(campo => {
+            if(membro[campo] === undefined) {
+
+              reject({erro: new Error('Todos os campos devem ser preenchidos!'), status: 400});
+            }
+          });
           const sql = "INSERT INTO membro SET ?"
           connection.query(sql, membro, (erro, resultados) => {
             if(erro){
-              reject(erro);
+              if(erro.errno === 1062){
+                erro.message = "O parametro 'telefone' não pode ter duplicadas no banco!"
+                reject({erro, status: 400})
+              }
+              reject({erro, status: 500});
             } else{
+
               resolve(resultados);
             }
           })
@@ -36,7 +48,7 @@ class MembroController {
               reject(erro);
             }else{
               if(resultados.length == 0) {
-                reject({error: 'Membro não encontrado'});
+                reject(new Error('Membro não encontrado!'));
               }
               resolve(resultados[0]);
             }
@@ -51,6 +63,9 @@ class MembroController {
             if(erro){
               reject(erro);
             } else {
+              if(resultados.affectedRows == 0){
+                reject(new Error('Membro não Encontrado!'));
+              }
               resolve(resultados);
             }
           });
@@ -60,11 +75,23 @@ class MembroController {
       patch(params){
         return new Promise((resolve, reject) => {
           const {id, fields} = params;
+          const campos = Object.keys(fields)
+          if(campos.length == 0){
+            reject(new Error('É presiso passar pelo menos um campo!'));
+          }
+          campos.forEach(campo => {
+            if(fields[campo] == ''){
+              reject(new Error(`O campo '${campo}' está vasio`));
+            }
+          })
           const sql = `UPDATE membro SET ? WHERE idMembro=${id}`;
           connection.query(sql, fields , (erro, resultados) => {
             if(erro){
               reject(erro);
             }else{
+              if(resultados.affectedRows == 0){
+                reject(new Error('Membro não Encontrado!'));
+              }
               resolve(resultados);
             }
           });
