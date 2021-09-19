@@ -61,7 +61,7 @@ elogioRouter.delete('/:idElogio', (req, res, next) => {
 });
 
 elogioRouter.patch('/', (req, res, next) => {
-    const {idElogio, fields} = req.body;
+    const { idElogio, fields } = req.body;
     ElogioController.patch(idElogio, fields)
         .then((resolve) => {
             res.json(resolve)
