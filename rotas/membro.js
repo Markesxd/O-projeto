@@ -21,6 +21,12 @@ membroRouter.post('/', (req, res) => {
   .catch((reject) => res.status(reject.status).json({mensagem: reject.erro.message}));
 });
 
+membroRouter.post('/login', (req, res) => {
+  MembroController.login(req.body)
+  .then(resolve => res.status(200).json(resolve))
+  .catch(reject => res.status(400).json(reject));
+});
+
 membroRouter.delete('/:id', (req, res) => {
   MembroController.delete(req.params.id)
   .then((resolve) => res.status(204).end())

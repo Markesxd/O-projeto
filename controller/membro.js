@@ -27,6 +27,23 @@ class MembroController {
         })
       }
 
+      login(auth){
+        return new Promise((resolve, reject) =>{
+          const sql = `SELECT idMembro FROM membro WHERE email="${auth.email}" AND senha="${auth.senha}"`;
+          connection.query(sql, null, (erro, resultados) => {
+              if(erro){
+                console.log(erro);
+                reject(erro);
+              } else {
+                if(!resultados){
+                  reject(new Error('Email ou senha estão errados'))
+                }
+                resolve(resultados);
+              }
+          });
+        });
+      }
+
       get(){
         return new Promise((resolve, reject) => {
           const sql = `SELECT * FROM membro`;
