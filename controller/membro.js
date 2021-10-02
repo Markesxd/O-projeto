@@ -15,7 +15,7 @@ class MembroController {
           connection.query(sql, membro, (erro, resultados) => {
             if(erro){
               if(erro.errno === 1062){
-                erro.message = "O parametro 'telefone' não pode ter duplicadas no banco!"
+                erro.message = "O parametro 'email' não pode ter duplicadas no banco!"
                 reject({erro, status: 400})
               }
               reject({erro, status: 500});
@@ -44,14 +44,18 @@ class MembroController {
         });
       }
 
-      get(){
+      get(pagina = 1, tamanhoPagina = 5){
+        pagina = Number(pagina);
+        const pager = tamanhoPagina * (pagina - 1);
         return new Promise((resolve, reject) => {
           const sql = `SELECT * FROM membro`;
           connection.query(sql, null, (erro, resultados) => {
             if(erro){
               reject(erro);
             } else{
-              resolve(resultados);
+              const paginado = resultados.slice(pager, pager + tamanhoPagina);
+              if(paginado.length === 0) reject(new Error('pagina não existe'));
+              resolve(paginado);
             }
           })
         })

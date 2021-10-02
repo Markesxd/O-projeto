@@ -4,9 +4,9 @@ import MembroController from '../controller/membro.js';
 const membroRouter = Router();
 
 membroRouter.get('/', (req, res) => {
-  MembroController.get()
+  MembroController.get(req.query.pagina, req.query.tamanhoPagina)
   .then((resolve) => res.json(resolve))
-  .catch((reject) => res.status(400).json(reject));
+  .catch((reject) => res.status(400).json({mensagem: reject.message}));
 });
 
 membroRouter.get('/:id', (req, res) => {
