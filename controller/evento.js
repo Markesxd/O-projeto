@@ -22,14 +22,18 @@ class EventoController {
       })
     }
 
-    get(){
+    get(pagina = 1, tamanhoPagina = 5){
+      pagina = Number(pagina);
+      const pager = tamanhoPagina * (pagina - 1);
       return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM evento";
         connection.query(sql, null, (erro, resultados) => {
           if(erro){
             reject(erro);
           } else{
-            resolve(resultados);
+            const paginado = resultados.slice(pager, pager + tamanhoPagina);
+            if(paginado.length === 0) reject(new Error('pagina não existe'));
+            resolve(paginado);
           }
         })
       })
