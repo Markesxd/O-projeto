@@ -13,6 +13,7 @@ export default function membro() {
               dataEgresso date,
               pontuacao int NOT NULL DEFAULT 0,
               PRIMARY KEY (idMembro),
+              FOREIGN KEY (setor) REFERENCES setor (idSetor),
               UNIQUE (email)
               )`;
   return connection.query(sql);

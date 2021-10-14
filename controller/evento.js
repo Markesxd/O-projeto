@@ -4,7 +4,7 @@ class EventoController {
 
     post(evento){
       return new Promise((resolve, reject) => {
-        const camposObrigatorios = ['descricao', 'data', 'setor_id_setor'];
+        const camposObrigatorios = ['descricao', 'data', 'setor_idSetor'];
         camposObrigatorios.forEach(campo => {
           if(evento[campo] === undefined) {
 
@@ -95,4 +95,4 @@ class EventoController {
     }
 }
 
-export default new EventoController(); 
+export default new EventoController();
