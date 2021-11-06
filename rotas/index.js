@@ -7,6 +7,7 @@ import eventoRouter from './evento.js';
 
 const router = Router();
 
+router.get('/', (req, res) => {res.send(`<a href="https://linkedej.com.br/site/"><h1>API da LinkedJr</h1></a>`)});
 router.use('/membro', membroRouter);
 router.use('/elogio',elogioRouter);
 router.use('/avaliacao', avaliacaoRouter);
