@@ -6,11 +6,11 @@ import setor from './setor.js';
 
 export default async function models() {
   try{
-    avaliacao();
-    elogio();
-    membro();
     setor();
+    membro();
     evento();
+    elogio();
+    avaliacao();
 
     console.log('Tabelas criadas com sucesso!');
 } catch(erro){
