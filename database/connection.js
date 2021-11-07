@@ -1,6 +1,6 @@
 import mysql from 'mysql2';
 
-const config = process.env.CLEARDB_DATABASE_URL || {
+const config = {
   "host": process.env.DB_HOST,
   "port": process.env.DB_PORT,
   "database": process.env.DATABASE,
@@ -8,25 +8,28 @@ const config = process.env.CLEARDB_DATABASE_URL || {
   "password": process.env.DB_PASSWORD,
 }
 
-const connection = mysql.createConnection(config);
+let connection;
 
-// let connection;
-
-// const handleDisconect = () => {
-//   connection = mysql.createConnection(config);
+const handleDisconect = () => {
+  connection = mysql.createConnection(config);
   
-//   connection.connect((err) => {
-//     if(err){
-//       console.error(err);
-//       setTimeout(handleDisconect, 2000);
-//     }
-//   });
+  connection.connect((err) => {
+    if(err){
+      console.error(err);
+      setTimeout(handleDisconect, 2000);
+    }
+  });
 
-// }
+}
 
-// connection.on('error', (err) => {
+connection.on('error', (err) => {
+ if(err.code === 'PROTOCOL_CONNECTION_LOST'){
+   handleDisconect();
+ } else {
+   throw err;
+ }
+})
 
-// })
-
+handleDisconect();
 
 export default connection;
