@@ -8,26 +8,25 @@ const config = {
   "password": process.env.DB_PASSWORD,
 }
 
-let connection;
+const connection = mysql.createPool(config);
 
-const handleDisconect = () => {
-  connection = mysql.createConnection(config);
+// let connection;
+// const handleDisconect = () => {
   
-  connection.connect((err) => {
-    if(err){
-      console.error(err);
-      setTimeout(handleDisconect, 2000);
-    }
-  });
+//   connection.connect((err) => {
+//     if(err){
+//       console.error(err);
+//       setTimeout(handleDisconect, 2000);
+//     }
+//   });
 
-}
-handleDisconect();
+// }
 
-connection.on('error', (err) => {
- if(err){
-   handleDisconect();
- }
-})
+// handleDisconect();
+
+// connection.on('error', (err) => {
+//    handleDisconect();
+// })
 
 
 export default connection;
