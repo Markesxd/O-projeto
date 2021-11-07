@@ -21,6 +21,7 @@ const handleDisconect = () => {
   });
 
 }
+handleDisconect();
 
 connection.on('error', (err) => {
  if(err.code === 'PROTOCOL_CONNECTION_LOST'){
@@ -30,6 +31,5 @@ connection.on('error', (err) => {
  }
 })
 
-handleDisconect();
 
 export default connection;
