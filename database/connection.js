@@ -24,10 +24,8 @@ const handleDisconect = () => {
 handleDisconect();
 
 connection.on('error', (err) => {
- if(err.code === 'PROTOCOL_CONNECTION_LOST'){
+ if(err){
    handleDisconect();
- } else {
-   throw err;
  }
 })
 
